@@ -38,7 +38,7 @@ const  getLocation = async (req, res) => {
   console.log('in location controler');
   console.log(req.params.locId);
 
-  await Loc.findByIdAndDelete(req.params.locId).exec()
+  await Loc.findById(req.params.locId).exec()
     .then(doc => {
       if (!doc) {
         return res
@@ -71,7 +71,10 @@ router
   .route('/locations/:locId')
 	.get(getLocation)
   .delete(getLocation); 
-app.use('/',router);
+
+
+
+ app.use('/',router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
