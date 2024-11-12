@@ -63,14 +63,70 @@ const  getLocation = async (req, res) => {
   }
  
     
+  const  delLocation = async (req, res) => {
+    console.log('in location controler');
+    console.log(req.params.locId);
   
- 
-    
+    await Loc.findByIdAndDelete(req.params.locId).exec()
+      .then(doc => {
+        if (!doc) {
+          return res
+          .status(404)
+          .json({
+          "message": "location not found"
+          });
+        }
+  
+       return res
+              .status(200)
+              .json(doc);
+      })
+      .catch(err=> {
+  
+        return res
+                .status(404)
+                .json(err);
+  
+      });
+  
+    }
+   
+  
+    const  insertLocation = async (req, res) => {
+     await Loc.create(
+                      {
+                          name     : req.body.name,
+                          facilities: req.body.facilities,
+                          rating    : req.body.rating
+                      })
+
+                      .then(doc => {
+                        if (!doc) {
+                          return res
+                          .status(404)
+                          .json({
+                          "message": "location not found"
+                          });
+                        }
+                       return res
+                              .status(200)
+                              .json(doc);
+                      })
+                      .catch(err=> {
+                        return res
+                                .status(404)
+                                .json(err);
+                      });
+        }                       
 
 router
   .route('/locations/:locId')
 	.get(getLocation)
-  .delete(getLocation); 
+  .delete(delLocation); 
+
+router
+  .route('/locations')
+  .post(insertLocation);
 
 
 
