@@ -119,6 +119,11 @@ const  getLocation = async (req, res) => {
                       });
         }                       
 
+
+
+ 
+        
+
 router
   .route('/locations/:locId')
 	.get(getLocation)
