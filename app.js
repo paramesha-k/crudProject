@@ -38,7 +38,7 @@ const  getLocation = async (req, res) => {
   console.log('in location controler');
   console.log(req.params.locId);
 
-  await Loc.findById(req.params.locId).exec()
+  await Loc.findById(req.params.locId)
     .then(doc => {
       if (!doc) {
         return res
@@ -67,7 +67,7 @@ const  getLocation = async (req, res) => {
     console.log('in location controler');
     console.log(req.params.locId);
   
-    await Loc.findByIdAndDelete(req.params.locId).exec()
+    await Loc.findByIdAndDelete(req.params.locId)
       .then(doc => {
         if (!doc) {
           return res
