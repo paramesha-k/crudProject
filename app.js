@@ -121,13 +121,41 @@ const  getLocation = async (req, res) => {
 
 
 
+        const  updateLocation = async (req, res) => {
+
+          await Loc.findByIdAndUpdate(
+                          req.params.locId,
+                          req.body,
+                          { new: true, runValidators: true })
+
+                                                
+                           .then(doc => {
+                             if (!doc) {
+                               return res
+                               .status(404)
+                               .json({
+                               "message": "location not found"
+                               });
+                             }
+                            return res
+                                   .status(200)
+                                   .json(doc);
+                           })
+                           .catch(err=> {
+                             return res
+                                     .status(404)
+                                     .json(err);
+                           });
+             }                              
+
  
         
 
 router
   .route('/locations/:locId')
 	.get(getLocation)
-  .delete(delLocation); 
+  .delete(delLocation)
+  .put(updateLocation);
 
 router
   .route('/locations')
